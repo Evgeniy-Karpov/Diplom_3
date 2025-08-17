@@ -3,6 +3,7 @@ package pages;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -15,11 +16,16 @@ public class MainPage {
     // Локаторы
     private final By loginButton = By.xpath("//button[text()='Войти в аккаунт']");
     private final By accountButton = By.xpath("//p[text()='Личный Кабинет']");
-    private final By constructorLink = By.xpath("//p[text()='Конструктор']");
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+    }
+
+    public boolean isAuthorizedUser() {
+        return wait.until(ExpectedConditions
+                        .visibilityOfElementLocated(By.xpath("//button[text()='Оформить заказ']")))
+                .isDisplayed();
     }
 
     @Step("Клик на кнопку 'Войти в аккаунт'")
@@ -32,11 +38,6 @@ public class MainPage {
     public static MainPage open(WebDriver driver) {
         driver.get("https://stellarburgers.nomoreparties.site/");
         return new MainPage(driver);
-    }
-
-    @Step("Проверить видимость кнопки конструктора")
-    public boolean isConstructorLinkDisplayed() {
-        return driver.findElement(constructorLink).isDisplayed();
     }
 
     @Step("Перейти в личный кабинет")

@@ -23,17 +23,21 @@ public class LoginPage {
 
     @Step("Заполнить поле 'Email'")
     public void fillEmail(String email) {
-        driver.findElement(emailField).sendKeys(email);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(emailField))
+                .sendKeys(email);
     }
 
     @Step("Заполнить поле 'Пароль'")
     public void fillPassword(String password) {
-        driver.findElement(passwordField).sendKeys(password);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordField))
+                .sendKeys(password);
     }
 
     @Step("Нажать кнопку 'Войти'")
-    public void clickLoginButton() {
-        driver.findElement(loginButton).click();
+    public MainPage clickLoginButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(loginButton))
+                .click();
+        return new MainPage(driver);
     }
 
     @Step("Открыть страницу входа")

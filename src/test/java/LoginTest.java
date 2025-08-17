@@ -8,8 +8,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.*;
 import utils.UserGenerator;
+
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -46,6 +50,9 @@ public class LoginTest {
         MainPage mainPage = MainPage.open(driver);
         mainPage.clickLoginAccountButton();
 
+        performLogin();
+        assertTrue(mainPage.isAuthorizedUser(), "Пользователь должен быть авторизован"); // улучшена проверка после успешной авторизации
+
     }
 
     @ParameterizedTest
@@ -57,7 +64,7 @@ public class LoginTest {
         mainPage.goToAccountPage();
 
         performLogin();
-        assertTrue(mainPage.isConstructorLinkDisplayed(), "Должна отображаться главная страница после входа");
+        assertTrue(mainPage.isAuthorizedUser(), "Пользователь должен быть авторизован"); // улучшена проверка после успешной авторизации
     }
 
     @ParameterizedTest
@@ -69,7 +76,7 @@ public class LoginTest {
         registerPage.clickLoginLink();
 
         performLogin();
-        assertTrue(new MainPage(driver).isConstructorLinkDisplayed(), "Должна отображаться главная страница после входа");
+        assertTrue(new MainPage(driver).isAuthorizedUser(), "Пользователь должен быть авторизован"); // улучшена проверка после успешной авторизации
     }
 
     @ParameterizedTest
@@ -81,7 +88,7 @@ public class LoginTest {
         forgotPasswordPage.clickLoginLink();
 
         performLogin();
-        assertTrue(new MainPage(driver).isConstructorLinkDisplayed(), "Должна отображаться главная страница после входа");
+        assertTrue(new MainPage(driver).isAuthorizedUser(), "Пользователь должен быть авторизован"); // улучшена проверка после успешной авторизации
     }
 
     private void performLogin() {
@@ -89,5 +96,8 @@ public class LoginTest {
         loginPage.fillEmail(email);
         loginPage.fillPassword(password);
         loginPage.clickLoginButton();
+
+        new WebDriverWait(driver, Duration.ofSeconds(5)) // ожидание перехода на главную страницу
+                .until(ExpectedConditions.urlContains("stellarburgers.nomoreparties.site"));
     }
 }
