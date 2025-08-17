@@ -42,7 +42,7 @@ public class RegistrationTest {
     @ParameterizedTest
     @EnumSource(Browser.class)
     public void testSuccessfulRegistration(Browser browser) {
-        WebDriver driver = WebDriverFactory.createDriver(browser);
+        driver = WebDriverFactory.createDriver(browser);
 
         try {
             RegisterPage registerPage = RegisterPage.open(driver);
@@ -56,17 +56,18 @@ public class RegistrationTest {
                     "После регистрации должна отображаться страница входа");
 
 
+            this.accessToken = UserClient.getAccessToken(email, password);
+
         } finally {
-            driver.quit();
-            if (accessToken != null) {
-                UserClient.deleteUser(accessToken);
+            if (driver != null) {
+                driver.quit();
             }
         }
     }
     @ParameterizedTest
     @EnumSource(Browser.class)
     public void testRegistrationWithShortPassword(Browser browser) {
-        WebDriver driver = WebDriverFactory.createDriver(browser);
+        driver = WebDriverFactory.createDriver(browser);
         String shortPassword = "12345"; // Меньше 6 символов
 
         try {
@@ -83,7 +84,9 @@ public class RegistrationTest {
                     "Должно отображаться сообщение о некорректном пароле");
 
         } finally {
-            driver.quit();
+            if (driver != null) {
+                driver.quit();
+            }
         }
     }
 

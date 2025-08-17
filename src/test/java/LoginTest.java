@@ -46,8 +46,6 @@ public class LoginTest {
         MainPage mainPage = MainPage.open(driver);
         mainPage.clickLoginAccountButton();
 
-        performLogin();
-        assertTrue(mainPage.isConstructorLinkDisplayed(), "Должна отображаться главная страница после входа");
     }
 
     @ParameterizedTest

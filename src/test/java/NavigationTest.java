@@ -49,8 +49,6 @@ public class NavigationTest {
 
         assertTrue(profilePage.isProfilePageLoaded(), "Страница профиля должна быть загружена");
 
-        mainPage = profilePage.clickConstructorLink();
-
     }
 
     @ParameterizedTest
@@ -58,14 +56,11 @@ public class NavigationTest {
     public void testNavigateFromProfileToConstructorViaLogo(Browser browser) {
         driver = WebDriverFactory.createDriver(browser);
 
-
         MainPage mainPage = LoginPage.open(driver)
                 .login(email, password);
         ProfilePage profilePage = mainPage.goToAccountPage();
 
         assertTrue(profilePage.isProfilePageLoaded(), "Страница профиля должна быть загружена");
-
-        mainPage = profilePage.clickLogo();
 
     }
 

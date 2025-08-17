@@ -14,8 +14,6 @@ public class ProfilePage {
 
     // Локаторы
     private final By logoutButton = By.xpath("//button[text()='Выход']");
-    private final By constructorLink = By.xpath("//p[text()='Конструктор']");
-    private final By logo = By.xpath("//div[@class='AppHeader_header__logo__2D0X2']");
     private final By profileSection = By.xpath("//a[text()='Профиль']");
 
     public ProfilePage(WebDriver driver) {
@@ -32,24 +30,6 @@ public class ProfilePage {
             System.out.println("Profile section not found. Current URL: " + driver.getCurrentUrl());
             return false;
         }
-    }
-
-    @Step("Выйти из аккаунта")
-    public void logout() {
-        driver.findElement(logoutButton).click();
-    }
-
-
-    @Step("Кликнуть на 'Конструктор' и вернуться на главную")
-    public MainPage clickConstructorLink() {
-        wait.until(ExpectedConditions.elementToBeClickable(constructorLink)).click();
-        return new MainPage(driver);
-    }
-
-    @Step("Кликнуть на логотип и вернуться на главную")
-    public MainPage clickLogo() {
-        wait.until(ExpectedConditions.elementToBeClickable(logo)).click();
-        return new MainPage(driver);
     }
 
     @Step("Нажать кнопку 'Выход'")

@@ -50,4 +50,14 @@ public class UserClient {
                 .post(LOGIN_ENDPOINT);
     }
 
+    @Step("Получить accessToken пользователя")
+    public static String getAccessToken(String email, String password) {
+        Response response = login(email, password);
+
+        if (response.statusCode() == 200) {
+            return response.jsonPath().getString("accessToken");
+        } else {
+            throw new RuntimeException("Не удалось получить токен. Код ответа: " + response.statusCode());
+        }
+    }
 }
